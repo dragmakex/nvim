@@ -23,7 +23,7 @@ return {
       require "configs.lspconfig"
     end,
   },
-  
+
   {
     "folke/persistence.nvim",
     event = "BufReadPre", -- Automatically loads before buffers are read
@@ -34,24 +34,63 @@ return {
       })
     end,
   },
+  --{
+    --'boganworld/crackboard.nvim',
+    --dependencies = { 'nvim-lua/plenary.nvim' },
+    --lazy = false,
+    --config = function()
+      --require('crackboard').setup({
+        --session_key = 'xx',
+      --})
+    --end,
+  --},
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "vim", "lua", "vimdoc",
+        "html", "css"
+      },
+    },
+  },
 
   {
-    'boganworld/crackboard.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    "yetone/avante.nvim",
+    event = "VeryLazy",
     lazy = false,
-    config = function()
-      require('crackboard').setup({
-        session_key = 'xx',
-      })
-    end,
-  },
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
-}
+    version = false,
+    opts = require("configs.avante"),  -- This will load your avante.lua config
+    build = "make",
+    dependencies = {
+        "stevearc/dressing.nvim",
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+        "echasnovski/mini.pick",
+        "nvim-telescope/telescope.nvim",
+        "hrsh7th/nvim-cmp",
+        "ibhagwan/fzf-lua",
+        "nvim-tree/nvim-web-devicons",
+        "zbirenbaum/copilot.lua",
+        {
+            "HakonHarnes/img-clip.nvim",
+            event = "VeryLazy",
+            opts = {
+                default = {
+                    embed_image_as_base64 = false,
+                    prompt_for_file_name = false,
+                    drag_and_drop = {
+                        insert_mode = true,
+                    },
+                    use_absolute_path = true,
+                },
+            },
+        },
+        {
+            'MeanderingProgrammer/render-markdown.nvim',
+            opts = {
+                file_types = { "markdown", "Avante" },
+            },
+            ft = { "markdown", "Avante" },
+        },
+    },
+}}
