@@ -34,6 +34,12 @@ return {
       })
     end,
   },
+  {
+    "nvzone/typr",
+    dependencies = "nvzone/volt",
+    opts = {},
+    cmd = { "Typr", "TyprStats" },
+  },
   --{
     --'boganworld/crackboard.nvim',
     --dependencies = { 'nvim-lua/plenary.nvim' },
