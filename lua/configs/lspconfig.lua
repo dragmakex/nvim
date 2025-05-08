@@ -13,7 +13,8 @@ local servers = {
   "pyright",      -- Python
   "clangd",       -- C/C++
   "rust_analyzer",-- Rust
-  "solidity_ls"   -- Solidity 
+  "solidity_ls",  -- Solidity
+  "sourcekit"     -- Swift
 }
 
 local nvlsp = require "nvchad.configs.lspconfig"
