@@ -51,6 +51,16 @@ return {
     --end,
   --},
   {
+    "voltycodes/areyoulockedin.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = "VeryLazy",
+    config = function()
+      require("areyoulockedin").setup({
+        session_key = "bd049112-f1c5-4fd3-92fa-b7da79c60c12",
+      })
+    end,
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
