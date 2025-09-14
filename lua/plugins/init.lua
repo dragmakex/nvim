@@ -83,7 +83,12 @@ return {
         "MunifTanjim/nui.nvim",
         "echasnovski/mini.pick",
         "nvim-telescope/telescope.nvim",
-        "hrsh7th/nvim-cmp",
+        {
+          "hrsh7th/nvim-cmp",
+          config = function()
+            require "configs.cmp"
+          end,
+        },
         "ibhagwan/fzf-lua",
         "nvim-tree/nvim-web-devicons",
         "zbirenbaum/copilot.lua",
