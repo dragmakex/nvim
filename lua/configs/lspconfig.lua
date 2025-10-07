@@ -1,44 +1,42 @@
--- load defaults i.e lua_lsp
-require("nvchad.configs.lspconfig").defaults()
-local lspconfig = require "lspconfig"
--- EXAMPLE
+-- Load NvChad LSP config utilities
+local nvlsp = require "nvchad.configs.lspconfig"
+
+-- Configure individual LSP servers
 local servers = {
   "html",
   "cssls",
   "ts_ls",    -- TypeScript
-  -- "eslint",   -- ESLint (configured separately below)
   "jdtls",        -- Java Language Server
   "pyright",      -- Python
   "clangd",       -- C/C++
-  -- "rust_analyzer",-- Rust (removed from auto-setup)
   "solidity_ls",  -- Solidity
   "sourcekit"     -- Swift
 }
-local nvlsp = require "nvchad.configs.lspconfig"
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+
+-- Configure standard servers
+for _, server in ipairs(servers) do
+  vim.lsp.config(server, {
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
-  }
+  })
 end
 
--- Manually configure rust-analyzer with custom path
-lspconfig.rust_analyzer.setup {
+-- Configure rust analyzer with custom path
+vim.lsp.config("rust_analyzer", {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
-  cmd = { "/opt/homebrew/bin/rust-analyzer" }, -- or wherever it's installed
-}
+  cmd = { "/opt/homebrew/bin/rust-analyzer" },
+})
 
--- Configure ESLint with specific flags
-lspconfig.eslint.setup {
+-- Configure ESLint with specific settings
+vim.lsp.config("eslint", {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
   cmd = { "vscode-eslint-language-server", "--stdio" },
-  root_dir = lspconfig.util.root_pattern(
+  root_dir = require("lspconfig.util").root_pattern(
     '.eslintrc',
     '.eslintrc.js',
     '.eslintrc.cjs',
@@ -70,5 +68,5 @@ lspconfig.eslint.setup {
     },
     nodePath = "",
   },
-}
+})
 

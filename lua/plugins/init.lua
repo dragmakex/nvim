@@ -67,9 +67,46 @@ return {
         "vim", "lua", "vimdoc",
         "html", "css"
       },
+      highlight = {
+        enable = true,
+        -- Ensure Tamarin files get highlighted
+        disable = function(lang, buf)
+          if lang == "tamarin" then
+            return false
+          end
+        end,
+      },
     },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+
+      -- Associate .spthy files with Tamarin
+      vim.filetype.add({
+        extension = {
+          spthy = "tamarin",
+        },
+      })
+
+      -- Add parser configuration
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.tamarin = {
+        install_info = {
+          url = "https://github.com/aeyno/tree-sitter-tamarin.git",
+          files = {"src/parser.c", "src/scanner.c"},
+          branch = "main",
+        },
+        filetype = "tamarin",
+      }
+
+      -- Install Tamarin parser only if not already installed
+      local parsers = require("nvim-treesitter.parsers")
+      if not parsers.has_parser("tamarin") then
+        vim.cmd("TSInstall tamarin")
+      end
+    end,
   },
 
+  
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
