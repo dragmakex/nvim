@@ -8,8 +8,9 @@ return {
   
   providers = {
     claude = {
-      endpoint = "https://api.anthropic.com",
-      model = "claude-3-5-sonnet-latest",
+      endpoint = "https://api.z.ai/api/anthropic",
+      model = "glm-4.6",
+      api_key_name = "ANTHROPIC_AUTH_TOKEN",
       timeout = 30000, -- Timeout in milliseconds
       extra_request_body = {
         temperature = 0,
