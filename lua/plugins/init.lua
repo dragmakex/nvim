@@ -40,26 +40,16 @@ return {
     opts = {},
     cmd = { "Typr", "TyprStats" },
   },
-  --{
-    --'boganworld/crackboard.nvim',
-    --dependencies = { 'nvim-lua/plenary.nvim' },
-    --lazy = false,
+    --{
+    --"voltycodes/areyoulockedin.nvim",
+    --dependencies = { "nvim-lua/plenary.nvim" },
+    --event = "VeryLazy",
     --config = function()
-      --require('crackboard').setup({
-        --session_key = 'xx',
-      --})
+     -- require("areyoulockedin").setup({
+      --  session_key = "",
+     -- })
     --end,
-  --},
-  {
-    "voltycodes/areyoulockedin.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    event = "VeryLazy",
-    config = function()
-      require("areyoulockedin").setup({
-        session_key = "bd049112-f1c5-4fd3-92fa-b7da79c60c12",
-      })
-    end,
-  },
+ -- },
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
