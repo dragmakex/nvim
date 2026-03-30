@@ -35,11 +35,14 @@ dashboard.section.header.val = {
 
 
 dashboard.section.buttons.val = {
-      dashboard.button("f", "  Find file", "<cmd> Telescope find_files <cr>"),
+      dashboard.button("f", "  Find file", "<cmd> lua require('fff').find_in_git_root() <cr>"),
       dashboard.button("n", "  New file", "<cmd> ene <BAR> startinsert <cr>"),
-      dashboard.button("r", "  Recent files", "<cmd> Telescope oldfiles <cr>"),
-      dashboard.button("g", "  Find text", "<cmd> Telescope live_grep <cr>"),
-      --- dashboard.button("Z", "  Open Directories", "<cmd> lua require('telescope').extensions.zoxide.list({picker_opts}) <cr>"), ---
+      dashboard.button("g", "  Git status", "<cmd> Git <cr>"),
+      dashboard.button(
+        "w",
+        "  Grep text",
+        "<cmd> lua local q = vim.fn.input('Grep > '); if q ~= '' then vim.cmd('silent grep! ' .. vim.fn.shellescape(q)); vim.cmd('copen') end <cr>"
+      ),
       dashboard.button("c", "  Config", "<cmd> edit ~/.config/nvim/init.lua <cr>"),
       dashboard.button("s", "  Restore Session", "<cmd> lua require('persistence').load() <cr>"),
       dashboard.button("p", "  Plugins", "<cmd> Lazy <cr>"),
@@ -66,4 +69,3 @@ dashboard.section.buttons.opts.hl = "Keyword"
 
 dashboard.opts.opts.noautocmd = true
 alpha.setup(dashboard.opts)
-

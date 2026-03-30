@@ -1,5 +1,36 @@
 return {
- 
+  {
+    "nvim-telescope/telescope.nvim",
+    enabled = false,
+  },
+
+  {
+    "dmtrKovalenko/fff.nvim",
+    lazy = false,
+    build = function()
+      require("fff.download").download_or_build_binary()
+    end,
+    opts = {
+      prompt = " ",
+      title = "Files",
+    },
+  },
+
+  {
+    "tpope/vim-fugitive",
+    cmd = {
+      "Git",
+      "G",
+      "Gdiffsplit",
+      "Gvdiffsplit",
+      "Gread",
+      "Gwrite",
+      "Gclog",
+      "Gblame",
+      "GBrowse",
+    },
+  },
+
   {
     'goolord/alpha-nvim',
     cmd = "Alpha",
