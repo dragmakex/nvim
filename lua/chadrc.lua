@@ -4,6 +4,7 @@
 
 ---@type ChadrcConfig
 local M = {}
+local statusline = require "configs.statusline"
 
 M.base46 = {
 	theme = "catppuccin",
@@ -12,6 +13,14 @@ M.base46 = {
 	-- 	Comment = { italic = true },
 	-- 	["@comment"] = { italic = true },
 	-- },
+}
+
+M.ui = {
+  statusline = {
+    modules = {
+      git = statusline.vcs,
+    },
+  },
 }
 
 return M

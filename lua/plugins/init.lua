@@ -32,6 +32,47 @@ return {
   },
 
   {
+    "sindrets/diffview.nvim",
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewFileHistory",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+      "DiffviewRefresh",
+    },
+    opts = {},
+  },
+
+  {
+    "nicolasgb/jj.nvim",
+    cmd = {
+      "J",
+      "Jdiff",
+      "Jvdiff",
+      "Jhdiff",
+      "JJ",
+    },
+    dependencies = {
+      "sindrets/diffview.nvim",
+    },
+    config = function()
+      require("jj").setup {
+        diff = {
+          backend = "diffview",
+        },
+      }
+
+      vim.api.nvim_create_user_command("JJ", function(opts)
+        vim.cmd("J " .. opts.args)
+      end, {
+        nargs = "*",
+        complete = "command",
+      })
+    end,
+  },
+
+  {
     'goolord/alpha-nvim',
     cmd = "Alpha",
     init = function()
