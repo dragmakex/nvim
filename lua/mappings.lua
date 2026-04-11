@@ -5,12 +5,20 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 local del = vim.keymap.del
 
-local function fff_files()
-  require("fff").find_in_git_root()
+local function in_git_repo()
+  return vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):find("^/") ~= nil
 end
 
 local function fff_cwd()
   require("fff").find_files()
+end
+
+local function fff_files()
+  if in_git_repo() then
+    require("fff").find_in_git_root()
+  else
+    fff_cwd()
+  end
 end
 
 local function fff_grep()
@@ -57,7 +65,7 @@ for _, lhs in ipairs {
   pcall(del, "n", lhs)
 end
 
-map("n", "<leader>ff", fff_files, { desc = "find files in git root" })
+map("n", "<leader>ff", fff_files, { desc = "find files in git root or cwd" })
 map("n", "<leader>fa", fff_cwd, { desc = "find files in cwd" })
 map("n", "<leader>fw", fff_grep, { desc = "live grep in files" })
 map("n", "<leader>gt", vcs_worktree_view, { desc = "vcs worktree view" })

@@ -7,6 +7,18 @@ end
 
 local dashboard = require("alpha.themes.dashboard")
 
+local function in_git_repo()
+    return vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):find("^/") ~= nil
+end
+
+local function open_file_picker()
+    if in_git_repo() then
+        require("fff").find_in_git_root()
+    else
+        require("fff").find_files()
+    end
+end
+
 local function open_vcs_dashboard()
     if vim.fn.system("jj root 2>/dev/null"):find("^/") ~= nil then
         vim.cmd("JJ status")
@@ -44,7 +56,7 @@ dashboard.section.header.val = {
 
 
 dashboard.section.buttons.val = {
-      dashboard.button("f", "  Find file", "<cmd> lua require('fff').find_in_git_root() <cr>"),
+      dashboard.button("f", "  Find file", "<cmd> lua open_file_picker() <cr>"),
       dashboard.button(
         "g",
         "  Grep text",
@@ -75,6 +87,7 @@ dashboard.section.footer.val = footer()
 dashboard.section.footer.opts.hl = "Type"
 dashboard.section.header.opts.hl = "Include"
 dashboard.section.buttons.opts.hl = "Keyword"
+_G.open_file_picker = open_file_picker
 _G.open_vcs_dashboard = open_vcs_dashboard
 
 dashboard.opts.opts.noautocmd = true

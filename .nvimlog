@@ -1,0 +1,2 @@
+WRN 2026-03-30T18:57:44.782 ?.83531    server_start:199: Failed to start server: operation not permitted: /var/folders/vn/0qz89vwx33nb6gpq_psb6xd00000gn/T/nvim.sticky/Rw5reC/nvim.83531.0
+WRN 2026-04-01T16:30:29.582 ?.35635    server_start:199: Failed to start server: operation not permitted: /var/folders/vn/0qz89vwx33nb6gpq_psb6xd00000gn/T/nvim.sticky/2HB65q/nvim.35635.0
