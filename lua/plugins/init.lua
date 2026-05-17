@@ -168,4 +168,23 @@ return {
     end,
   },
 
+  {
+    "dragmakex/solidity-metrics.nvim",
+    cmd = {
+      "SolidityMetricsFile",
+      "SolidityMetricsWorkspace",
+      "SolidityMetricsScope",
+      "SolidityMetricsHtml",
+    },
+    ft = "solidity",
+    opts = {
+      html = {
+        open = false,
+      },
+    },
+    config = function(_, opts)
+      require("solidity_metrics").setup(opts)
+    end,
+  },
+
 }

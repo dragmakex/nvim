@@ -1,54 +1,50 @@
--- Load NvChad LSP config utilities
 local nvlsp = require "nvchad.configs.lspconfig"
 
--- Configure individual LSP servers
+local base_config = {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+}
+
 local servers = {
   "html",
   "cssls",
-  "ts_ls",    -- TypeScript
-  "jdtls",        -- Java Language Server
-  "pyright",      -- Python
-  "clangd",       -- C/C++
-  "solidity_ls",  -- Solidity
-  "sourcekit"     -- Swift
+  "ts_ls",
+  "jdtls",
+  "pyright",
+  "clangd",
+  "solidity_ls",
+  "sourcekit",
 }
 
--- Configure standard servers
-for _, server in ipairs(servers) do
-  vim.lsp.config(server, {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  })
+local function configure(server, extra)
+  vim.lsp.config(server, vim.tbl_deep_extend("force", base_config, extra or {}))
+  vim.lsp.enable(server)
 end
 
--- Configure rust analyzer with custom path
-vim.lsp.config("rust_analyzer", {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
+for _, server in ipairs(servers) do
+  configure(server)
+end
+
+configure("rust_analyzer", {
   cmd = { "/opt/homebrew/bin/rust-analyzer" },
 })
 
--- Configure ESLint with specific settings
-vim.lsp.config("eslint", {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
+configure("eslint", {
   cmd = { "vscode-eslint-language-server", "--stdio" },
-  root_dir = require("lspconfig.util").root_pattern(
-    '.eslintrc',
-    '.eslintrc.js',
-    '.eslintrc.cjs',
-    '.eslintrc.yaml',
-    '.eslintrc.yml',
-    '.eslintrc.json',
-    'eslint.config.js',
-    'eslint.config.mjs',
-    'eslint.config.cjs',
-    'eslint.config.ts',
-    'package.json'
-  ),
+  root_markers = {
+    ".eslintrc",
+    ".eslintrc.js",
+    ".eslintrc.cjs",
+    ".eslintrc.yaml",
+    ".eslintrc.yml",
+    ".eslintrc.json",
+    "eslint.config.js",
+    "eslint.config.mjs",
+    "eslint.config.cjs",
+    "eslint.config.ts",
+    "package.json",
+  },
   settings = {
     workingDirectories = { mode = "auto" },
     validate = "on",
@@ -56,7 +52,7 @@ vim.lsp.config("eslint", {
     useESLintClass = true,
     codeActionOnSave = {
       enable = false,
-      mode = "all"
+      mode = "all",
     },
     format = false,
     quiet = false,
@@ -64,7 +60,7 @@ vim.lsp.config("eslint", {
     rulesCustomizations = {},
     run = "onType",
     problems = {
-      shortenToSingleLine = false
+      shortenToSingleLine = false,
     },
     nodePath = "",
   },
