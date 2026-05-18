@@ -169,22 +169,76 @@ return {
   },
 
   {
+    "3rd/image.nvim",
+    build = false,
+    opts = {
+      backend = "kitty",
+      processor = "magick_cli",
+      integrations = {
+        markdown = { enabled = false },
+        html = { enabled = false },
+        css = { enabled = false },
+      },
+    },
+  },
+
+  {
     "dragmakex/solidity-metrics.nvim",
+    ft = "solidity",
+    dependencies = { "3rd/image.nvim" },
     cmd = {
       "SolidityMetricsFile",
       "SolidityMetricsWorkspace",
       "SolidityMetricsScope",
       "SolidityMetricsHtml",
     },
-    ft = "solidity",
-    opts = {
-      html = {
-        open = false,
-      },
+    keys = {
+      { "<leader>sf", "<cmd>SolidityMetricsFile<cr>", desc = "Solidity metrics: current file" },
+      { "<leader>sw", "<cmd>SolidityMetricsWorkspace<cr>", desc = "Solidity metrics: workspace" },
+      { "<leader>ss", "<cmd>SolidityMetricsScope<cr>", desc = "Solidity metrics: scope file" },
+      { "<leader>sh", "<cmd>SolidityMetricsHtml<cr>", desc = "Solidity metrics: export HTML" },
     },
-    config = function(_, opts)
-      require("solidity_metrics").setup(opts)
-    end,
+    opts = {
+      cmd = nil,
+      prefer_local = true,
+      local_bin = "solidity-code-metrics",
+      timeout = 120000,
+      scopefile = "scope.txt",
+      workspace_root_markers = {
+        ".git",
+        "foundry.toml",
+        "hardhat.config.js",
+        "hardhat.config.ts",
+        "truffle-config.js",
+        "truffle.js",
+        "package.json",
+      },
+      exclude = {
+        "**/node_modules/**",
+        "**/mock*/**",
+        "**/test*/**",
+        "**/migrations/**",
+        "**/Migrations.sol",
+      },
+      output = {
+        kind = "split",
+        split = "botright new",
+        float = {
+          border = "rounded",
+          width = 0.9,
+          height = 0.9,
+        },
+      },
+      html = {
+        open = true,
+        filename = "solidity-metrics.html",
+      },
+      visual = {
+        enabled = true,
+        strict = true,
+      },
+      notify = true,
+    },
   },
 
 }
